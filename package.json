@@ -10,7 +10,10 @@
     "watch": "tsc --watch",
     "clean": "rm -rf dist"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.1",
+    "dotenv": "^16.5.0"
+  },
   "devDependencies": {
     "@types/node": "^22.14.1",
     "ts-node": "^10.9.2",
