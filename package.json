@@ -1,0 +1,19 @@
+{
+  "name": "brave-arayici",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.7.0"
+  }
+}
