@@ -343,15 +343,11 @@ Description: ${descData.descriptions[poi.id] || 'No description available'}
 `;
   }).join('\n---\n') || 'No local results found';
 }
-
 // Tool handlers
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [WEB_SEARCH_TOOL, LOCAL_SEARCH_TOOL],
 }));
-
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-
-
   try {
     const { name, arguments: args } = request.params;
 
