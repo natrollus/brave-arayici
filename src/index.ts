@@ -8,7 +8,42 @@ import {
   Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 import dotenv from 'dotenv';
+import http from 'http';
+
 dotenv.config();
+
+
+// Debug için log havuzu
+const debugLogs: string[] = [];
+
+// HTTP debug sunucusu
+const debugServer = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end(`
+    <html>
+      <head>
+        <meta http-equiv="refresh" content="1">
+        <style>pre { background: #f0f0f0; padding: 10px; }</style>
+      </head>
+      <body>
+        <h1>MCP Debug Logs</h1>
+        <pre>${debugLogs.join('\n')}</pre>
+      </body>
+    </html>
+  `);
+});
+
+// Log yazmak için kullanacağınız fonksiyon
+function logDebug(message: string) {
+  const logEntry = `${new Date().toISOString()}: ${message}`;
+  debugLogs.push(logEntry);
+  if (debugLogs.length > 100) debugLogs.shift(); // Son 100 logu tutun
+}
+
+// Debug sunucusunu başlatın (mevcut server kodundan önce olmalı)
+debugServer.listen(3238, () => {
+  console.error('Debug server running at http://localhost:3238');
+});
 
 const WEB_SEARCH_TOOL: Tool = {
   name: "brave_web_search",
@@ -315,8 +350,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 }));
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
+
+
   try {
     const { name, arguments: args } = request.params;
+
+    logDebug(`İstek alındı: ${name}, args: ${JSON.stringify(args)}`);
 
     if (!args) {
       throw new Error("No arguments provided");
